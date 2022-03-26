@@ -16,7 +16,7 @@ MESSAGE="${DVSWITCH} message"
 TUNE="${DVSWITCH} tune"
 MODESET="${DVSWITCH} mode"
 
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 
 #VARIABLES
 startup_lan=1
