@@ -256,7 +256,7 @@ if [ ${USER_NO:0:1} = 0 ]; then
         else USER_NO_NO=$USER_NO
 fi
 
-# USRP Port 중복 확인 루틴 이후에 다시 source를 변경하므로, 입력 변수를 call_sign_in 등과 같이 변경해서 사용함
+# Dado que la fuente se cambia nuevamente después de la rutina de verificación de duplicados del puerto USRP, la variable de entrada se cambia como call_sign_in y se usa. 
 
 call_sign_in=$(whiptail --title "$T009" --inputbox "$T160" 10 60 ${call_sign} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
@@ -294,7 +294,7 @@ fi
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
 done
 
-#--------------USRP PORT 입력 중복 확인 시작 부분 -------------------------------
+# --------------Inicio de verificación de duplicados de entrada de PUERTO USRP -------------- --- 
 
 usrp_port_in=$(whiptail --title "$T009" --inputbox "USRP Port? ( 50000 ~ 55000 )" 10 60 ${usrp_port} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
@@ -335,7 +335,7 @@ done
 #-------------------------------
 
 until [ "$port_check_M" != no ] && [ "$port_check_ar" != no ] && [ "$port_check" != no ]; do
-usrp_port_in=$(whiptail --title "$T009" --inputbox "Port $usrp_port_in 다른 사용자와 중복됨. 다시 입력하세요." 10 60 3>&1 1>&2 2>&3)
+usrp_port_in=$(whiptail --title "$T009" --inputbox "Port $usrp_port_in Duplicar con otro usuario. Vuelva a ingresar " 10 60 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
 
 source /var/lib/dvswitch/dvs/var.txt
@@ -373,7 +373,7 @@ done
 
 done
 
-#----------- USRP PORT 입력 중복 확인 끝 부분-----------------------
+# ----------- Fin de verificación de duplicados de entrada de PUERTO USRP----------- 
 
 source /var/lib/dvswitch/dvs/var.txt
 bm_address_M=$bm_address
@@ -381,17 +381,17 @@ bm_address_M=$bm_address
 source /var/lib/dvswitch/dvs/var$1.txt
 USER_NO=$1
 
-# 입력변수를 다시 바꿈
+# cambiar la variable de entrada de nuevo 
 call_sign=$call_sign_in; rpt_id=$rpt_id_in; dmr_id=$dmr_id_in; usrp_port=$usrp_port_in
 
 
 rx_MHz=${rx_freq:0:3}"."${rx_freq:3:4}
 
-rx_MHz=$(whiptail --title " $T009 " --inputbox "송수신 주파수(xxx.xxxx MHz)" 10 60 ${rx_MHz} 3>&1 1>&2 2>&3)
+rx_MHz=$(whiptail --title " $T009 " --inputbox "transmit/receive frequency(xxx.xxxx MHz)" 10 60 ${rx_MHz} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
 
 until [ ${#rx_MHz} = 8 ]; do
-rx_MHz=$(whiptail --title " $T009 " --inputbox "송수신 주파파수(xxx.xxxx MHz, 소수점 4자리)" 10 60 ${rx_MHz} 3>&1 1>&2 2>&3)
+rx_MHz=$(whiptail --title " $T009 " --inputbox "transmit/receive frequency(xxx.xxxx MHz, 4 decimal places)" 10 60 ${rx_MHz} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
 done
 
@@ -430,9 +430,9 @@ tx_freq=${rx_MHz:0:3}${rx_MHz:4:4}"00"
 
 # if [ x${bm_password} = x ]; then bm_password=passw0rd; fi
 
-bm_password=$(whiptail --title "$T009" --inputbox "브랜드마이스터 비밀번호" 10 60 ${bm_password} 3>&1 1>&2 2>&3)
+bm_password=$(whiptail --title "$T009" --inputbox "Password BM" 10 60 ${bm_password} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
-
+ransmit/receive frequency
 if [[ $T218 =~ Latitude ]]; then T218=$T218; else T218="Latitude : $T218"; fi
 lat=$(whiptail --title " $T009 " --inputbox "$T218" 10 60 -- ${lat} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
@@ -449,9 +449,9 @@ if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
 #desc=$(whiptail --title " $T009 " --inputbox "$T223" 10 60 "${desc}" 3>&1 1>&2 2>&3)
 #if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
 
-sel=$(whiptail --title " DVSM 매크로 언어 설정 " --menu "\
+sel=$(whiptail --title " Set DVSM macro language " --menu "\
 
-              DVSM 매크로 언어
+              DVSM macro language
 \n
 " 11 50 2 \
 "1" "한글" \
@@ -468,9 +468,9 @@ macro_lan=ENG ;;
 esac
 
 #-----------------------------------------------------------
-if (whiptail --title " 입력완료 " --yesno "\
-$sp15 사용자 정보의 입력이 완료되었습니다.
-$sp15 입력된 내용으로 설정하시겠습니까?
+if (whiptail --title " input complete " --yesno "\
+$sp15 User information input is complete.
+$sp15 Are you sure you want to set it as input?
 
 $sp15 $T005
 " 11 70);
@@ -484,7 +484,7 @@ let "complete=complete+10"
 echo -e "$complete"
 
 
-#------varxx.txt 수정 시작부분 ---------------------------------
+# ------varxx.txt at the beginning of the edit --------------------------------- 
 
 sudo sed -i "s/USER_NO/${USER_NO}/g" /var/lib/dvswitch/dvs/var$USER_NO.txt > /dev/null 2>&1
 
@@ -525,7 +525,7 @@ update_var lon ${lon}
 update_var lctn "${lctn}"
 
 
-# 한번 입력한 내용은 var00.txt에 반영하여 default로 사용
+# The content entered once is reflected in var00.txt and used as default 
 file=/var/lib/dvswitch/dvs/var00.txt
 #	sudo sed -i "/^lctn=/ c lctn=\"${lctn}\"" $file
 #	sudo sed -i "/^lat=/ c lat=${lat}" $file
@@ -534,7 +534,7 @@ file=/var/lib/dvswitch/dvs/var00.txt
         sudo sed -i "/^tx_freq=/ c tx_freq=${tx_freq}" $file
 #update_var desc "${desc}"
 
-#------varxx.txt 수정 끝부분 ---------------------------------
+# ------varxx.txt end of modification --------------------------------- 
 
 
 sudo mkdir /opt/user$1 > /dev/null 2>&1
@@ -584,7 +584,7 @@ sleep 1
 clear
 whiptail --msgbox "\
 
-$sp10 설정이 완료되었습니다.
+$sp10 setup is complete. 
 " 9 50 1
 
 ${DVS}dvsmu; exit 0
@@ -603,8 +603,8 @@ clear
 source /var/lib/dvswitch/dvs/var$1.txt > /dev/null 2>&1
 USER_NO=$1
 
-if (whiptail --title " 사용자 삭제 " --yesno "\
-$sp12 User$USER_NO의 모든 내용을 삭제하시겠습니까?
+if (whiptail --title " delete user " --yesno "\
+$sp12 User$USER_NO Are you sure you want to delete all contents of 
 
 $sp12 $T005
 " 10 70);
@@ -641,7 +641,7 @@ sudo rm /var/lib/dvswitch/dvs/var$USER_NO.txt
 clear
 whiptail --msgbox "\
 
-$sp10 작업이 완료되었습니다.
+$sp10 operation completed.
 " 9 50 1
 
 ${DVS}dvsmu; exit 0
@@ -658,12 +658,12 @@ function dvswitch_upgrade() {
 clear
 source /var/lib/dvswitch/dvs/lan/korean.txt
 
-if (whiptail --title " DVSwitch 업그레이드 " --yesno "\
-$sp02(dvs에서 주사용자의 DVSwitch를 업그레이드 한 후, 본 작업을 진행하는것이 좋습니다)
+if (whiptail --title " DVSwitch upgrade " --yesno "\
+$sp02 (It is recommended to do this after upgrading the main user's DVSwitch in dvs) 
 
-$sp03 주사용자와 추가사용자의 DVSwitch 프로그램을 비교한 후 업그레이드합니다.
+$sp03 Upgrade after comparing DVSwitch program of main user and additional user. 
 
-$sp03 비교작업을 진행하시겠습니까?  $T005
+$sp03 comparison?  $T005
 " 12 90);
         then :
         else ${DVS}dvsmu A; exit 0
@@ -699,7 +699,7 @@ else
         clear
         whiptail --msgbox "\
 
-$sp06 주사용자와 동일한 버전을 사용중입니다.
+$sp06 You are using the same version as the main user.
         " 9 60 1
 
         ${DVS}dvsmu A; exit 0
@@ -707,10 +707,10 @@ fi
 
 source /var/lib/dvswitch/dvs/lan/korean.txt
 
-if (whiptail --title " DVSwitch 업그레이드 " --yesno "\
-$sp03 주사용자의 DVSwitch 프로그램 중 일부가 업그레이드되었습니다.
+if (whiptail --title " DVSwitch upgrade " --yesno "\
+$sp03 Some of the main users' DVSwitch programs have been upgraded. 
 
-$sp03 추가사용자 DVSwitch를 업그레이드/재설정 하시겠습니까? (사용자당 약 20초)
+$sp03 Do you want to upgrade/reset user DVSwitch? (About 20 seconds per user) 
 
 $sp03 $T005
 " 12 85);
@@ -738,7 +738,7 @@ echo -e "$complete"
 
 	var_to_ini ${user} upgrade
 
-} |whiptail --title "$T029" --gauge "User${user} 업그레이드 및 설정중..." 6 60 0
+} |whiptail --title "$T029" --gauge "User${user} Upgrading and setting up..." 6 60 0
 
 fi
 done
@@ -746,7 +746,7 @@ done
 clear
 whiptail --msgbox "\
 
-$sp04 업그레이드 및 설정이 완료되었습니다.
+$sp04 The upgrade and setup are complete.
 " 9 50 1
 
 ${DVS}dvsmu A; exit 0
@@ -763,7 +763,7 @@ function dvsmu_upgrade() {
 
 clear
 source /var/lib/dvswitch/dvs/lan/korean.txt
-TERM=ansi whiptail --title "확인중" --infobox "$T006" 8 60
+TERM=ansi whiptail --title "Checking" --infobox "$T006" 8 60
 
 file=/usr/local/dvs/dvsmu
 ver_now=$($file -v)
@@ -788,7 +788,7 @@ if [ $ver_dn -le $ver_now ]; then
         clear
         whiptail --msgbox "\
 
-$sp04 현재 v.${ver_now_no}  최신 버전을 사용중입니다.
+$sp04 today v.${ver_now_no}  You are using the latest version.
         " 9 50 1
 
         ${DVS}dvsmu A; exit 0
@@ -797,19 +797,19 @@ elif [ "$ver_dn" = "" ]; then
         clear
         whiptail --msgbox "\
 
-$sp08 버전 확인이 되지 않습니다.
+$sp08 Version check is not available.
 
-$sp08 다시 확인하시기 바랍니다.
+$sp08 Please check again.
         " 11 50 1
 
         ${DVS}dvsmu A; exit 0
 
 elif [ $ver_dn -gt $ver_now ]; then
 	clear
-        if (whiptail --title " dvsMU 업그레이드 " --yesno "\
-$sp10 최신버전(v.$new_ver_no)으로 업그레이드가 가능합니다.
+        if (whiptail --title " dvsMU upgrade " --yesno "\
+$sp10 newest version(v.$new_ver_no)can be upgraded to
 
-$sp10 업그레이드 하시겠습니까?
+$sp10 Would you like to upgrade?
 
 $sp10 $T005
         " 12 70);
@@ -824,7 +824,7 @@ $sp10 $T005
 	clear
 	whiptail --msgbox "\
 
-$sp08 업그레이드가 완료되었습니다.
+$sp08 The upgrade is complete.
 	" 9 50 1
 
 	${DVS}dvsmu A; exit 0
@@ -842,9 +842,9 @@ fi
 #--------------------------------------------------------------
 function log_start_msg() {
 whiptail --msgbox "\
-$sp08 로그시간 = UTC
+$sp08 log time = UTC
 
-$sp08 로그 종료 명령은 q 또는 Ctrl-C
+$sp08 shutdown command q or Ctrl-C
 " 10 50 1
 }
 
@@ -857,9 +857,9 @@ else
 log_error_cnt=$(($log_error_cnt+1))
 clear
 whiptail --msgbox "\
-$sp05 실시간 로그가 보이지 않으면,
+$sp05 If you do not see the real-time log,
 
-$sp05 PTT를 한번 잡은 후, 다시 실행해 보시기 바랍니다.
+$sp05 PTT After grabbing it once, try running it again.
 " 10 60 1
 fi
 }
@@ -870,7 +870,7 @@ fi
 function no_file_msg() {
 clear
 whiptail --msgbox "\
-$sp08 파일이 없거나 빈 파일입니다.
+$sp08 File does not exist or is empty.
 " 9 50 1
 }
 
@@ -932,12 +932,12 @@ fi
 #--------------------------------------------------------------
 function main_user_log_menu() {
 
-sel=$(whiptail --title " MAIN USER LOG 확인 " --menu "\
+sel=$(whiptail --title " MAIN USER LOG Confirm " --menu "\
 \n
 " 12 45 5 \
-"1" "실시간 로그 확인" \
-"2" "MMDVM_Bridge.log 확인" \
-"3" "Analog_Bridge.log 확인" \
+"1" "Real-time log check" \
+"2" "MMDVM_Bridge.log Confirm" \
+"3" "Analog_Bridge.log Confirm" \
 "4" "Analog_Reflector.log" \
 "5" "Back" \
 3>&1 1>&2 2>&3)
@@ -983,7 +983,7 @@ esac
 #--------------------------------------------------------------
 function main_user_file_menu() {
 
-sel=$(whiptail --title " MAIN USER FILE 확인 " --menu "\
+sel=$(whiptail --title " MAIN USER FILE Confirm " --menu "\
 \n
 " 12 45 4 \
 "1" "MMDVM_Bridge.ini" \
@@ -1050,9 +1050,9 @@ sel3=$(whiptail --title " Main User Configuration " --menu "\
 $sp05 MAIN_USER  $call_sign_M $dmr_id $ext $usrp_port_M
 -------------------------------------------------------
 " 15 50 4 \
-"1" "로그 확인--->" \
-"2" "파일 관리--->" \
-"3" "서비스 재시작" \
+"1" "log check--->" \
+"2" "file management--->" \
+"3" "service restart" \
 "4" "Back to MAIN" \
 3>&1 1>&2 2>&3)
 
@@ -1156,13 +1156,13 @@ USER_NO=$1
 source /var/lib/dvswitch/dvs/var$USER_NO.txt > /dev/null 2>&1
 TA_in=$(whiptail --title "talkerAlias" --inputbox "\
 
-기본값(공백) :
-    안드로이드 사용자의 호출부호/이름 전달(BM의 기능)
-    (예: VK3AZN Bob)
+Default (blank) :
+    Passing Android user's call sign/name (function of BM)
+    (Yes: VK3AZN Bob)
 
-정보 수정 :
-    수정한 내용으로 전달
-    (예: VK3AZN dvsMU)
+Changing information :
+    Forward as edited content
+    (Yes: VK3AZN dvsMU)
 
 " 16 60 "${talkerAlias}" 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
@@ -1192,12 +1192,12 @@ ${DVS}dvsmu $USER_NO
 #--------------------------------------------------------------
 function sub_user_log_menu() {
 
-sel=$(whiptail --title " USER $USER_NO LOG 확인 " --menu "\
+sel=$(whiptail --title " USER $USER_NO LOG Confirm " --menu "\
 \n
 " 12 45 4 \
-"1" "실시간 로그 확인" \
-"2" "MMDVM_Bridge.log 확인" \
-"3" "Analog_Bridge.log 확인" \
+"1" "Real-time log check" \
+"2" "MMDVM_Bridge.log Confirm" \
+"3" "Analog_Bridge.log Confirm" \
 "4" "Back" \
 3>&1 1>&2 2>&3)
 
@@ -1220,7 +1220,7 @@ esac
 #--------------------------------------------------------------
 function sub_user_file_menu() {
 
-sel=$(whiptail --title " USER $USER_NO FILE 확인 " --menu "\
+sel=$(whiptail --title " USER $USER_NO FILE Confirm " --menu "\
 \n
 " 12 45 4 \
 "1" "MMDVM_Bridge.ini" \
@@ -1267,8 +1267,8 @@ USER_NO=$1
 
 if [ ! -e /var/lib/dvswitch/dvs/var$1.txt ] || [ x${call_sign} = x ]; then
 
-	if (whiptail --title " 사용자 추가 " --yesno "\
-$sp16 사용자를 추가하시겠습니까?
+	if (whiptail --title " add user " --yesno "\
+$sp16 Do you want to add users?
 
 $sp16 $T005
 " 10 70);
@@ -1285,14 +1285,14 @@ if [ $? != 0 ]; then ${DVS}dvsmu; exit 0; fi
 
 declare ext=${rpt_id:7:2}
 declare TA="${talkerAlias:0:15}"
-if [ "$TA" = "" ]; then TA="현재 공백"; fi
+if [ "$TA" = "" ]; then TA="current blank"; fi
 
 file=/opt/user$USER_NO/dvsm.macro
 
 if [ -e $file ]; then
 	if [[ ! -z `sudo grep "Advanced" $file -a` ]]; then
-	macro_status="수정매크로사용중"
-	else macro_status="기본매크로사용중"
+	macro_status="Edit macro in use"
+	else macro_status="Using default macro"
 	fi
 fi
 
@@ -1309,13 +1309,13 @@ sel2=$(whiptail --title " User Configuration " --menu "\
 $sp02 User$USER_NO  $call_sign $dmr_id $ext $usrp_port $macro_status
 -------------------------------------------------------
 " 20 55 9 \
-"1" "로그 확인 --->" \
-"2" "파일 관리 --->" \
-"3" "사용자 설정 변경" \
-"4" "사용자 삭제" \
-"5" "서비스 재시작" \
-"6" "기본매크로로 변경" \
-"7" "수정매크로로 변경" \
+"1" "log check --->" \
+"2" "file management --->" \
+"3" "Change user settings" \
+"4" "delete user" \
+"5" "service restart" \
+"6" "Change to default macro" \
+"7" "Change to edit macro" \
 "8" "talkerAlias ($TA)" \
 "9" "Back to MAIN" \
 3>&1 1>&2 2>&3)
@@ -1355,12 +1355,12 @@ exit 0
 # Function change_status
 #--------------------------------------------------------------
 function change_status() {
-sel=$(whiptail --title " 설정 변경 " --menu "\
+sel=$(whiptail --title " Change settings " --menu "\
 \n
 " 11 30 3 \
-"C" "취 소" \
-"A" "활성화" \
-"I" "비활성화" \
+"C" "cancel" \
+"A" "activate" \
+"I" "activate" \
 3>&1 1>&2 2>&3)
 
 case $sel in
@@ -1454,7 +1454,7 @@ else
 clear
 whiptail --msgbox "\
 
-$sp09 상태를 변경하지 않았습니다.
+$sp09 You did not change the state.
 " 9 50 1
 
 fi
@@ -1472,25 +1472,25 @@ ${DVS}dvsmu O; exit 0
 function system_optimizer() {
 
 dstar_chk=$(systemctl is-active ircddbgatewayd)
-if [ $dstar_chk = "active" ]; then dstar_sts="<< 활성상태 >>"; else dstar_sts=" 비활성상태"; fi
+if [ $dstar_chk = "active" ]; then dstar_sts="<< active >>"; else dstar_sts=" inactive"; fi
 
 ysf_chk=$(systemctl is-active ysfgateway)
-if [ $ysf_chk = "active" ]; then ysf_sts="<< 활성상태 >>"; else ysf_sts=" 비활성상태"; fi
+if [ $ysf_chk = "active" ]; then ysf_sts="<< active >>"; else ysf_sts=" inactive"; fi
 
 nxdn_chk=$(systemctl is-active nxdngateway)
-if [ $nxdn_chk = "active" ]; then nxdn_sts="<< 활성상태 >>"; else nxdn_sts=" 비활성상태"; fi
+if [ $nxdn_chk = "active" ]; then nxdn_sts="<< active >>"; else nxdn_sts=" inactive"; fi
 
 p25_chk=$(systemctl is-active p25gateway)
-if [ $p25_chk = "active" ]; then p25_sts="<< 활성상태 >>"; else p25_sts=" 비활성상태"; fi
+if [ $p25_chk = "active" ]; then p25_sts="<< active >>"; else p25_sts=" inactive"; fi
 
 lighttpd_chk=$(systemctl is-active lighttpd)
-if [ $lighttpd_chk = "active" ]; then lighttpd_sts="<< 활성상태 >>"; else lighttpd_sts=" 비활성상태"; fi
+if [ $lighttpd_chk = "active" ]; then lighttpd_sts="<< active >>"; else lighttpd_sts=" inactive"; fi
 
 monit_chk=$(systemctl is-active monit)
-if [ $monit_chk = "active" ]; then monit_sts="<< 활성상태 >>"; else monit_sts=" 비활성상태"; fi
+if [ $monit_chk = "active" ]; then monit_sts="<< active >>"; else monit_sts=" inactive"; fi
 
 shellinabox_chk=$(systemctl is-active shellinabox)
-if [ $shellinabox_chk = "active" ]; then shellinabox_sts="<< 활성상태 >>"; else shellinabox_sts=" 비활성상태"; fi
+if [ $shellinabox_chk = "active" ]; then shellinabox_sts="<< active >>"; else shellinabox_sts=" inactive"; fi
 
 #cpu_usage=$(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)* id.*/\1/" | awk '{printf "%.0f", 100 - $1}')
 model_name=$(cat /proc/cpuinfo | grep "model name")
@@ -1503,10 +1503,10 @@ fi
 
 source /var/lib/dvswitch/dvs/var.txt
 
-sel=$(whiptail --title " 시스템 최적화 " --menu "\
+sel=$(whiptail --title " system optimization " --menu "\
                   $temp
 
-            주사용자의 시스템 설정
+            Main User's System Settings
 ---------------------------------------------
 \n
 " 19 50 8 \
@@ -1514,9 +1514,9 @@ sel=$(whiptail --title " 시스템 최적화 " --menu "\
 "2" "YSF    $ysf_sts" \
 "3" "NXDN   $nxdn_sts" \
 "4" "P25    $p25_sts" \
-"5" "대시보드      $lighttpd_sts" \
-"6" "시스템모니터  $monit_sts" \
-"7" "웹브라우저SSH $shellinabox_sts" \
+"5" "dashboard      $lighttpd_sts" \
+"6" "system monitor  $monit_sts" \
+"7" "web browser ssh $shellinabox_sts" \
 "8" "Back" \
 3>&1 1>&2 2>&3)
 
@@ -1558,24 +1558,24 @@ if [[ ! -z `sudo grep "reboot=" $file` ]]; then
         line=$(cat $file | sed -n ${line_no}p)
         timeset=$(echo $line | cut -d '=' -f 2)
         timesetplusone=$(($timeset+1))
-        timeset_info_1="매일$timeset ~ $timesetplusone시"
-        timeset_info_2="사용하지 않는 시간에 리부팅"
+        timeset_info_1="everyday$timeset ~ $timesetplusone시"
+        timeset_info_2="Reboot when not in use"
 else
         timeset=""
-        timeset_info_1="설정없음"
+        timeset_info_1="no setting"
 fi
 
 
 source /var/lib/dvswitch/dvs/var.txt
 
-sel=$(whiptail --title " 리부팅 시간설정 " --menu "\
+sel=$(whiptail --title " Reboot time setting " --menu "\
 
-$sp01 현재설정: $timeset_info_1
+$sp01 Current setting: $timeset_info_1
 $sp01           $timeset_info_2
 -----------------------------------------
 " 14 45 3 \
-"1" "리부팅 설정 및 변경" \
-"2" "리부팅 설정삭제" \
+"1" "Reboot settings and changes" \
+"2" "Delete reboot settings" \
 "3" "Back" \
 3>&1 1>&2 2>&3)
 
@@ -1585,7 +1585,7 @@ if [ $? != 0 ]; then
 case $sel in
 1)
 until [ "$new_timeset" != "" ]; do
-new_timeset=$(whiptail --title "$T009" --inputbox "시간입력( 0 ~ 23 )" 10 60 ${timeset} 3>&1 1>&2 2>&3)
+new_timeset=$(whiptail --title "$T009" --inputbox "time input( 0 ~ 23 )" 10 60 ${timeset} 3>&1 1>&2 2>&3)
 if [ $? != 0 ]; then
  ${DVS}dvsmu R; exit 0; fi
 done
@@ -1598,9 +1598,9 @@ fi
 sudo systemctl restart cron
 ${DVS}dvsmu R; exit 0 ;;
 2)
-if (whiptail --title " 설정 삭제 " --yesno "\
+if (whiptail --title " Delete settings " --yesno "\
 
-$sp05 매일1회 리부팅 설정을 삭제하시겠습니까?
+$sp05 Do you want to delete the once-daily reboot setting?
 
 " 9 60); then
 sudo sed -i -e "/time=/ c #time=5" $file
@@ -1627,7 +1627,7 @@ function connection_status() {
 source /var/lib/dvswitch/dvs/lan/korean.txt
 pse_wait
 
-#---------main 및sub user의 핫스팟 호출부호 추출 -------------------------------------------
+#---------Extract hotspot callsigns for main and sub users -------------------------------------------
 source /var/lib/dvswitch/dvs/var.txt
         declare call_sign_M=$call_sign
         if [ ${#call_sign} = 4 ]; then declare call_sign_M="$call_sign$sp02"; fi
@@ -1649,7 +1649,7 @@ done
 #echo $call_sign01
 #echo $call_sign02
 
-#---------- main_user의 BM 연결상태 확인 ------------------------------------
+#---------- Check main_user's BM connection status ------------------------------------
 
 file1=/var/log/mmdvm/MMDVM_Bridge.log
 
@@ -1684,7 +1684,7 @@ fi
 
 #echo $con_BM_M
 
-#------------ sub_user의 BM 연결상태 확인 --------------------------------
+#------------ sub_user of BM Check the connection status --------------------------------
 user=$user_array
 
 for user in $user; do
@@ -1744,7 +1744,7 @@ done
 #echo "15=$con_BM_15"
 #echo "16=$con_BM_16"
 
-#----------- main_user의 클라이언트 연결시간 및 연결상태 확인 --------------------------
+#----------- Checking main_user's client connection time and connection status --------------------------
 
 #-----------------------------------
 # Function chk_AR_log
@@ -1994,11 +1994,11 @@ done
 #echo "15=$callsign_cl_15"
 #echo "15=$con_cl_time_15"
 
-#     <<< 핫스팟 및 클라이언트 연결상태 >>>
+#     <<< Hotspot and client connection status >>>
 
 clear
 whiptail --msgbox "\
-       핫스팟 BM  클라이언트_최종연결_현재상태\
+       Hotspot BM client_last connection_presence\
 
    -----------------------------------------\
 
@@ -2109,17 +2109,17 @@ if [ -e /usr/local/dvs/dvsmuz ]; then
 sys_admin_z
 
 else
-sel=$(whiptail --title " 시스템 관리 " --menu "\
+sel=$(whiptail --title " system management " --menu "\
 \n
 " 17 50 9 \
-"1" "시스템 모니터링" \
-"2" "시스템 최적화" \
-"3" "시스템 리부팅" \
-"4" "1일1회 리부팅 설정" \
-"5" "BM 및 클라이언트 연결상태 확인" \
-"6" "추가사용자 DVSwitch 업그레이드" \
-"7" "dvsMU (Multi User) 업그레이드" \
-"8" "dvsmu.log 열기" \
+"1" "system monitoring" \
+"2" "system optimization" \
+"3" "system reboot" \
+"4" "Reboot settings once a day" \
+"5" "BM and client connection status check" \
+"6" "additional user DVSwitch upgrade" \
+"7" "dvsMU (Multi User) upgrade" \
+"8" "dvsmu.log Heat" \
 "9" "Back to Main" \
 3>&1 1>&2 2>&3)
 
@@ -2131,7 +2131,7 @@ case $sel in
 clear
 whiptail --msgbox "\
 
-$sp03 시스템 모니터의 종료 명령은 F10 또는 Ctrl-C
+$sp03 The system monitor shutdown command is F10 or Ctrl-C
 " 9 57 1
 
 htop; ${DVS}dvsmu A ;;
@@ -2140,9 +2140,9 @@ system_optimizer ;;
 3)
 clear
 source /var/lib/dvswitch/dvs/lan/korean.txt
-if (whiptail --title " 시스템 리부팅 " --yesno "\
+if (whiptail --title " system reboot " --yesno "\
 
-$sp10 지금 리부팅 하시겠습니까?
+$sp10 would you like to reboot now?
 " 9 50);
 then sudo reboot
 else ${DVS}dvsmu A; exit 0
@@ -2231,7 +2231,7 @@ if [ -e /var/lib/dvswitch/dvs/var${user}.txt ] && [ x${call_sign} != x ]; then
 	declare ext${user}=${rpt_id:7:2}
 	declare usrp_port${user}=$usrp_port
 	declare talkerAlias${user}="${talkerAlias:0:13}"
-#	 TA가 공백이 아니고, TA에 핫스팟관리자의 호출부호가 없으면 no_main_call_in_TA=yes
+#	 TA is not blank, If the TA does not have a call sign for the hotspot manager, no_main_call_in_TA=yes
 #	if [ "$talkerAlias" != "" ] && [[ "$talkerAlias" != *"$call_sign"* ]]; then show_TA=yes; fi
 	if [ "$talkerAlias" != "" ]; then show_TA=yes; fi
 fi
@@ -2246,7 +2246,7 @@ sel=$(whiptail --title " DVSwitch Multi User " --menu "\
                  dvsMU v.$SCRIPT_VERSION by HL5KY
 \n
 " 31 60 23 \
-"A" "시스템 관리" \
+"A" "system management" \
 "M" "MAIN   $call_sign_M $dmr_id_M $ext_M $usrp_port_M talkerAlias" \
 "=" "============================================" \
 "01" "User01 $call_sign01 $dmr_id01 $ext01 $usrp_port01 $talkerAlias01" \
@@ -2290,7 +2290,7 @@ sel=$(whiptail --title " DVSwitch Multi User " --menu "\
 "39" "User39 $call_sign39 $dmr_id39 $ext39 $usrp_port39 $talkerAlias39" \
 "40" "User40 $call_sign40 $dmr_id40 $ext40 $usrp_port40 $talkerAlias40" \
 "=" "============================================" \
-"X" "종 료" \
+"X" "end" \
 3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then exit 0; fi
@@ -2301,7 +2301,7 @@ sel=$(whiptail --title " DVSwitch Multi User " --menu "\
             dvsMU v.$SCRIPT_VERSION by HL5KY
 \n
 " 31 50 23 \
-"A" "시스템 관리" \
+"A" "system management" \
 "M" "MAIN   $call_sign_M $dmr_id_M $ext_M $usrp_port_M" \
 "=" "===============================" \
 "01" "User01 $call_sign01 $dmr_id01 $ext01 $usrp_port01" \
@@ -2345,7 +2345,7 @@ sel=$(whiptail --title " DVSwitch Multi User " --menu "\
 "39" "User39 $call_sign39 $dmr_id39 $ext39 $usrp_port39" \
 "40" "User40 $call_sign40 $dmr_id40 $ext40 $usrp_port40" \
 "=" "===============================" \
-"X" "종 료" \
+"X" "end" \
 3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then exit 0; fi
