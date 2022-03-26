@@ -1,17 +1,17 @@
-▶ DVSwitch이미지에 dvsMU를 추가하는 방법 (setup.sh를 이용하여 설치를 하여도 결과는 동일함)
-config.sh를 다운로드 하여, 실행한다.
+▶ How to add dvsMU to DVSwitch image (Even after installing using setup.sh, the result is the same.)
+Download and run config.sh.
 순서
-sudo wget -O config.sh https://raw.githubusercontent.com/hl5btf/DVSMU/main/config.sh
+sudo wget -O config.sh https://raw.githubusercontent.com/hp3icc/DVSMU/main/config.sh
 sudo chmod +x config.sh
 ./config.sh
 
 #=====================================================================================
 ▶ dvsMU를 설치하는 방법은 2가지가 있다.
     1. setup.sh를 직접 실행하는 방법.
-        sudo wget -O setup.sh https://raw.githubusercontent.com/hl5btf/DVSMU/main/setup.sh
+        sudo wget -O setup.sh https://raw.githubusercontent.com/hp3icc/DVSMU/main/setup.sh
         sudo chmod +x setup.sh
         ./setup.sh
-    2. github/hl5ky/setup(바이너리파일)을 실행하여, setup.sh가 실행되게 하는 방법. (github/hl5ky/dvsmu 에 설명이 있음)
+    2. github/hl5ky/setup(binary file)by running, setup.sh how to make it run. (github/hl5ky/dvsmu has an explanation in)
     
 #=====================================================================================
 ▶ dvsMU를 사용하기 위해서 일부 파일은 DVSwitch와 달리 아래와 같이 수정해야 함.
@@ -24,12 +24,12 @@ sudo chmod +x config.sh
 *other1,.    QRM
 *mainmenu,---- MAIN MENU ----
 
-▶adv_tgref.txt (user00KR 의 내용도 수정)
+▶adv_tgref.txt (user00KR edit the contents of)
 *push_tg_ref,Download(DBupdate+Favorite)
 *managetg,Add/Del TG/Ref
 *mainmenu,---- MAIN MENU ----
 
-▶adv_tools.txt (user00KR 의 내용도 수정)
+▶adv_tools.txt (user00KR edit the contents of)
 *44,44 Drop Dynamic TGs
 *temp,Check Temp.
 *ver,DVSwitch Version?
@@ -37,20 +37,20 @@ sudo chmod +x config.sh
 *mainmenu,---- MAIN MENU ----
 
 ▶dvsm.macro
-DVSWITCH=/opt/userUSER_NO/dvswitch.sh 수정
+DVSWITCH=/opt/userUSER_NO/dvswitch.sh correction
 
 ▶dvsm.sh
 source /var/lib/dvswitch/dvs/varUSER_NO.txt
 
-{tgdb} -> {tgdb_user} 변경
+{tgdb} -> {tgdb_user} change
 
-#  RESTART의 내용 변경
+#  RESTART change the contents of
 if [ "$1" = "restart" ]; then
         sudo systemctl restart mmdvm_bridgeUSER_NO
         sudo systemctl restart analog_bridgeUSER_NO
         sudo systemctl restart md380-emuUSER_NO
 
-#  Change MODE  모든 모드의 내용 변경
+#  Change MODE  Change the content of all mods
 elif [ "$1" = "dstar" ]; then
 #        if [ ${mode_now} = "DSTAR" ]; then
         ${MESSAGE} " only DMR is available "
