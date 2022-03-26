@@ -1,0 +1,28 @@
+[Unit]
+Description=Analog_Bridge Service
+# Description=Place this file in /lib/systemd/system
+# Description=N4IRS 10/16/2020
+
+After=netcheck.service
+Requires=netcheck.service
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=3
+RestartPreventExitStatus=254
+StandardOutput=null
+WorkingDirectory=/opt/userUSER_NO
+Environment=AnalogBridgeLogDir=/var/log/dvswitch/userUSER_NO
+ExecStartPre = /bin/sh -c 'echo "Starting Analog_Bridge: [`date +%%T.%%3N`]" >> /var/log/netcheck'
+ExecStart=/opt/userUSER_NO/Analog_Bridge /opt/userUSER_NO/Analog_Bridge.ini
+ExecStartPost= -/usr/local/sbin/update-config.sh
+ExecReload=/bin/kill -2 $MAINPID
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+
+# 254 matching IDs
+# 253 ini parse errors
+# 252 dv3000 not found, fallback not enabled

@@ -1,0 +1,64 @@
+▶ DVSwitch이미지에 dvsMU를 추가하는 방법 (setup.sh를 이용하여 설치를 하여도 결과는 동일함)
+config.sh를 다운로드 하여, 실행한다.
+순서
+sudo wget -O config.sh https://raw.githubusercontent.com/hl5btf/DVSMU/main/config.sh
+sudo chmod +x config.sh
+./config.sh
+
+#=====================================================================================
+▶ dvsMU를 설치하는 방법은 2가지가 있다.
+    1. setup.sh를 직접 실행하는 방법.
+        sudo wget -O setup.sh https://raw.githubusercontent.com/hl5btf/DVSMU/main/setup.sh
+        sudo chmod +x setup.sh
+        ./setup.sh
+    2. github/hl5ky/setup(바이너리파일)을 실행하여, setup.sh가 실행되게 하는 방법. (github/hl5ky/dvsmu 에 설명이 있음)
+    
+#=====================================================================================
+▶ dvsMU를 사용하기 위해서 일부 파일은 DVSwitch와 달리 아래와 같이 수정해야 함.
+   (github의 파일들은 수정되어 있고, setup을 실행하면 수정된 파일이 적용됨)
+
+▶adv_dmr.txt (user00KR 의 내용도 수정)
+*bm,.    Brandmeister
+*dmrplus,.    DMRPlus
+*tgif,.    TGIF
+*other1,.    QRM
+*mainmenu,---- MAIN MENU ----
+
+▶adv_tgref.txt (user00KR 의 내용도 수정)
+*push_tg_ref,Download(DBupdate+Favorite)
+*managetg,Add/Del TG/Ref
+*mainmenu,---- MAIN MENU ----
+
+▶adv_tools.txt (user00KR 의 내용도 수정)
+*44,44 Drop Dynamic TGs
+*temp,Check Temp.
+*ver,DVSwitch Version?
+*88,88 Restart DVSwitch Services(2sec)
+*mainmenu,---- MAIN MENU ----
+
+▶dvsm.macro
+DVSWITCH=/opt/userUSER_NO/dvswitch.sh 수정
+
+▶dvsm.sh
+source /var/lib/dvswitch/dvs/varUSER_NO.txt
+
+{tgdb} -> {tgdb_user} 변경
+
+#  RESTART의 내용 변경
+if [ "$1" = "restart" ]; then
+        sudo systemctl restart mmdvm_bridgeUSER_NO
+        sudo systemctl restart analog_bridgeUSER_NO
+        sudo systemctl restart md380-emuUSER_NO
+
+#  Change MODE  모든 모드의 내용 변경
+elif [ "$1" = "dstar" ]; then
+#        if [ ${mode_now} = "DSTAR" ]; then
+        ${MESSAGE} " only DMR is available "
+#        sudo systemctl restart ircddbgatewayd
+#        else
+#        sudo systemctl restart ircddbgatewayd
+#       sleep 12
+#        ${MODESET} DSTAR
+#        ${DVSWITCH} tlvAudio AUDIO_USE_GAIN ${txgain_dstar}
+#        fi
+#=====================================================================================

@@ -1,0 +1,403 @@
+#!/bin/bash
+
+time_now=$(date +%Y-%m-%d'  '%H:%M:%S)
+FILE_LOG=/var/log/dvswitch/dvsmu.log
+
+user_array="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40"
+
+#echo $time_now
+
+#=====================================================
+# Function time_chk
+#=====================================================
+function time_chk() {
+        file=/etc/crontab
+
+        line_no=$(grep -n "man_log" $file -a | cut -d: -f1)
+        line=$(cat $file | sed -n ${line_no}p)
+        min=${line:0:2}
+
+        line_no=$(grep -n "time=" $file -a | cut -d: -f1)
+        line=$(cat $file | sed -n ${line_no}p)
+        time=$(echo $line | cut -d '=' -f 2)
+}
+
+#=====================================================
+# Function main_user_connection_chk
+# main_user의 클라이언트 연결상태 확인
+#=====================================================
+
+function main_user_connection_chk() {
+
+ar_status=$(systemctl is-active analog_reflector)
+if [ $ar_status = "active" ]; then
+
+	file=/var/log/dvswitch/Analog_Reflector.log
+
+	if [ -e $file ] && [[ ! -z `grep "New Mobile client" $file -a` ]]; then
+
+		line_no_new_mobile=$(grep -n "New Mobile client" $file -a | cut -d: -f1 | tail -1)
+		line_no_removing=$(grep -n "Removing client" $file -a | cut -d: -f1 | tail -1)
+
+#echo $line_no_new_mobile
+#echo $line_no_removing
+
+
+		if [ $line_no_new_mobile -gt $line_no_removing ]; then
+			line=$(cat $file | sed -n ${line_no_new_mobile}p)
+	        	con_cl_M=yes; cnted_callsigns="main_user "
+		else line=$(cat $file | sed -n ${line_no_removing}p)
+		        con_cl_M=NO
+		fi
+
+	else
+		con_cl_M=NO
+	fi
+else
+	source /var/lib/dvswitch/dvs/var.txt
+
+	file1=/var/log/dvswitch/Analog_Bridge.log
+
+	echo "" | sudo tee temp.txt > /dev/null 2>&1
+
+	n=5
+	until [ $n = 0 ]; do
+	n=$(($n-1))
+	log_date=$(date -d "$n day ago" '+%Y-%m-%d')
+	file2=/var/log/dvswitch/Analog_Bridge-$log_date.log
+
+	if [ -e $file2 ]; then
+        	cat $file2 | sudo tee -a temp.txt > /dev/null 2>&1
+	fi
+	done
+
+	if [ -s $file1 ]; then
+        	cat $file1 | sudo tee -a temp.txt > /dev/null 2>&1
+	fi
+
+	file=temp.txt
+
+	if [ -e $file ] && [[ ! -z `grep "ip change" $file -a` ]]; then
+		line_no_ipchange=$(grep -n "ip change" $file -a | cut -d: -f1 | tail -1)
+		line_no_connect=$(grep -n "USRP_TYPE_TEXT" $file -a | cut -d: -f1 | tail -1)
+        		if [ "$line_no_connect" = "" ]; then line_no_connect=0; fi
+		line_no_reset=$(grep -n "USRP reset" $file -a | cut -d: -f1 | tail -1)
+        		if [ "$line_no_reset" = "" ]; then line_no_reset=0; fi
+		line_no_analog_start=$(grep -n "starting" $file -a | cut -d: -f1 | tail -1)
+        		if [ "$line_no_analog_start" = "" ]; then line_no_analog_start=0; fi
+
+	        if [ $line_no_connect -gt $line_no_reset ] && [ $line_no_connect -gt $line_no_analog_start ]; then
+        	        con_cl_M=yes; cnted_callsigns="main_user "
+	        elif [ $line_no_ipchange -gt $line_no_reset ] && [ $line_no_ipchange -gt $line_no_analog_start ]; then
+        	        con_cl_M=yes; cnted_callsigns="main_user "
+	        else
+        	        con_cl_M=NO
+	        fi
+	else con_cl_M=NO
+	fi
+	sudo rm $file
+fi
+
+#echo $con_cl_M
+#echo $cnted_callsigns
+}
+
+#=====================================================
+# Function sub_user_connection_chk
+# sub_user의 클라이언트 연결상태 확인 및 Analog_Bridge.log의 4일 지난 내용 지우기
+#=====================================================
+
+function sub_user_connection_chk() {
+
+con_cl_one_of_sub_users=NO
+
+user=$user_array
+
+for user in $user; do
+
+dir=/opt/user${user}
+
+if [ -d $dir ]; then
+
+source /var/lib/dvswitch/dvs/var${user}.txt > /dev/null 2>&1
+file=/var/log/dvswitch/user${user}/Analog_Bridge.log > /dev/null 2>&1
+
+if [[ ! -z `grep "ip change" $file -a` ]] && [ "$1" != and_shrink ]; then
+
+        line_no_ipchange=$(grep -n "ip change" $file -a | cut -d: -f1 | tail -1)
+        line_no_connect=$(grep -n "USRP_TYPE_TEXT" $file -a | cut -d: -f1 | tail -1)
+        if [ "$line_no_connect" = "" ]; then line_no_connect=0; fi
+        line_no_reset=$(grep -n "USRP reset" $file -a | cut -d: -f1 | tail -1)
+        if [ "$line_no_reset" = "" ]; then line_no_reset=0; fi
+        line_no_analog_start=$(grep -n "starting" $file -a | cut -d: -f1 | tail -1)
+        if [ "$line_no_analog_start" = "" ]; then line_no_analog_start=0; fi
+
+        if [ $line_no_ipchange -gt $line_no_reset ]; then
+                line=$(cat $file | sed -n ${line_no_ipchange}p)
+                else line=$(cat $file | sed -n ${line_no_reset}p)
+        fi
+
+
+        if [ $line_no_connect -gt $line_no_reset ] && [ $line_no_connect -gt $line_no_analog_start ]; then
+                con_cl_user=yes; con_cl_one_of_sub_users=yes; cnted_callsigns="${cnted_callsigns}${call_sign} "
+        elif [ $line_no_ipchange -gt $line_no_reset ] && [ $line_no_ipchange -gt $line_no_analog_start ]; then
+                con_cl_user=yes; con_cl_one_of_sub_users=yes; cnted_callsigns="${cnted_callsigns}${call_sign} "
+        else
+                con_cl_user=NO
+        fi
+
+else con_cl_user=NO
+
+fi
+
+#echo "$user $con_cl_user"
+
+if [ "$1" = and_shrink ] && [ $con_cl_user = "NO" ]; then
+        declare cmd_add=analog_bridge${user}
+        cmd="$cmd $cmd_add"
+
+
+        file=/var/log/dvswitch/user${user}/Analog_Bridge.log
+        date=$(date -d '4 day ago' '+%Y-%m-%d')
+        row_no=$(grep -n $date $file | cut -d: -f1 | head -1)
+        if [ "$row_no" = "" ]; then row_no=1; fi
+        sudo sed -i -e "1,${row_no}d" $file
+fi
+
+fi
+
+done
+}
+
+#=====================================================
+# Function main_user_busy_check
+#=====================================================
+function main_user_busy_check() {
+
+file=/var/log/mmdvm/MMDVM_Bridge.log
+
+n=0
+#until [ -e $file ] && [ -s $file ]; do
+until [ -s $file ] || [ $n = 5 ]; do
+if [ ! -e $file ] || [ ! -s $file ]; then
+        log_date=$(date -d "$n day ago" '+%Y-%m-%d')
+        file=/var/log/mmdvm/MMDVM_Bridge-$log_date.log
+fi
+n=$(($n+1))
+done
+
+if [ -e $file ]; then
+        tail -30 $file | sudo tee test.txt > /dev/null 2>&1
+        while read line
+        do
+        date_10min_ago=$(date -d '9 hour ago 10 minute ago' '+%Y%m%d%H%M%S')
+#echo $date_10min_ago
+        dd=${line:3:22}
+        ddd=$(date -d "$dd" +"%Y%m%d%H%M%S")
+#echo $ddd
+        if [ $ddd -gt $date_10min_ago ] && [[ $line =~ "TX state = ON" ]]; then
+#                echo "TX state = ON, main user busy"
+                busy_M=yes; busy_callsigns="main_user "; break
+        elif [ $ddd -gt $date_10min_ago ] && [[ $line =~ "txTg=" ]]; then
+#                echo "txTg=, main user busy "
+                busy_M=yes; busy_callsigns="main_user "; break
+        else busy_M=NO
+        fi
+        done < test.txt
+else
+busy_M=?? > /dev/null 2>&1
+fi
+
+#echo $busy_M
+}
+
+#=====================================================
+# Function AR_user_busy_check
+#=====================================================
+function AR_user_busy_check() {
+
+busy_AR=NO
+
+ar_status=$(systemctl is-active analog_reflector)
+if [ $ar_status = "active" ]; then
+
+	file=/var/log/dvswitch/Analog_Reflector.log
+
+	if [ -e $file ]; then
+        	tail -30 $file | sudo tee test.txt > /dev/null 2>&1
+	        while read line
+        	do
+	        date_10min_ago=$(date -d '9 hour ago 10 minute ago' '+%Y%m%d%H%M%S') > /dev/null 2>&1
+#echo $date_10min_ago
+	        dd=${line:3:18}
+        	ddd=$(date -d "$dd" +"%Y%m%d%H%M%S") > /dev/null 2>&1
+#echo $ddd
+	        if [ $ddd -gt $date_10min_ago ] && [[ "$line" =~ "Begin TX" ]] && [[ "$line" =~ "dst=0" ]]; then
+#                echo "AR user busy"
+        	        busy_AR=yes; busy_callsigns="main_user "; break
+                elif [ $ddd -gt $date_10min_ago ] && [[ "$line" =~ "Tune executed" ]]; then
+#                echo "AR user busy"
+                        busy_AR=yes; busy_callsigns="main_user "; break
+	        else busy_AR=NO
+        	fi
+	        done < test.txt
+	else
+	busy_AR=?? > /dev/null 2>&1
+	fi
+fi
+#echo $busy_AR
+}
+
+#=====================================================
+# Function sub_user_busy_check
+#=====================================================
+function sub_user_busy_check() {
+
+user=$user_array
+
+for user in $user; do
+
+dir=/opt/user${user}
+source /var/lib/dvswitch/dvs/var${user}.txt > /dev/null 2>&1
+file=/var/log/mmdvm/MMDVM_Bridge${user}.log > /dev/null 2>&1
+
+
+
+#if [ -e $file ] && [ -d $dir ]; then
+if [ -d $dir ] && [ "$busy_user" != yes ]; then
+
+#	source /var/lib/dvswitch/dvs/var${user}.txt > /dev/null 2>&1
+#        file=/var/log/mmdvm/MMDVM_Bridge${user}.log > /dev/null 2>&1
+
+        n=0
+#        until [ -e $file ] && [ -s $file ]; do
+        until [ -s $file ] || [ $n = 5 ]; do
+        if [ ! -e $file ] || [ ! -s $file ]; then
+                log_date=$(date -d "$n day ago" '+%Y-%m-%d')
+                file=/var/log/mmdvm/MMDVM_Bridge${user}-$log_date.log
+        fi
+        n=$(($n+1))
+        done
+
+
+        if [ -e $file ]; then
+                tail -30 $file | sudo tee test.txt > /dev/null 2>&1
+                while read line
+                do
+                date_10min_ago=$(date -d '9 hour ago 10 minute ago' '+%Y%m%d%H%M%S')
+                dd=${line:3:22}
+                ddd=$(date -d "$dd" +"%Y%m%d%H%M%S")
+                if [ $ddd -gt $date_10min_ago ] && [[ $line =~ "TX state = ON" ]]; then
+#                        echo "user${user} busy"
+                        busy_user=yes; busy_callsigns="${busy_callsigns}${call_sign} "; break
+                else busy_user=NO
+                fi
+                done < test.txt
+        else
+        busy_user=?? > /dev/null 2>&1
+        fi
+
+#echo ${user}
+
+fi
+
+done
+}
+
+#=====================================================
+# Function do_reboot
+#=====================================================
+function do_reboot() {
+
+        #---------------------------------------------------
+        log_dir=/var/log/dvswitch
+        sudo find $log_dir -name '*.log' -mtime +4 -delete
+
+        log_dir=/var/log/mmdvm
+        sudo find $log_dir -name '*.log' -mtime +4 -delete
+        #---------------------------------------------------
+
+        cmd="sudo systemctl restart"
+
+        if [ $con_cl_M = "NO" ]; then
+        cmd="$cmd analog_bridge"
+        fi
+
+        sub_user_connection_chk and_shrink
+
+        file=/etc/crontab
+        time_chk
+        sudo sed -i -e "/man_log/ c 0 $time * * * root /usr/local/dvs/man_log" $file
+
+        if [[ ! -z `sudo grep "reboot=yes" $file` ]]; then
+                log_line="$time_now  ${cnted_callsigns}Connected, ${busy_callsigns}Busy, REBOOT"
+                sudo sed -i "1 i\\$log_line" $FILE_LOG
+
+#echo "REBOOT"; exit 0
+
+                sudo reboot; exit 0
+        else
+#               echo $cmd
+                $cmd
+        fi
+}
+
+######################################################
+# MAIN Program
+######################################################
+
+if [ ! -e $FILE_LOG ]; then
+        echo "$time_now  Start a new dvsMU Log" | sudo tee $FILE_LOG > /dev/null 2>&1
+        log_line=--------------------------------------------------
+        sudo sed -i "1 i\\$log_line" $FILE_LOG
+fi
+
+#con_cl_M=$(main_user_connection_chk)
+
+#-----------------------------------------------------------------
+main_user_connection_chk
+sub_user_connection_chk
+
+#echo "con_cl_M $con_cl_M"
+#echo "cnted_callsigns $cnted_callsigns"
+#echo "con_cl_one_of_sub_users $con_cl_one_of_sub_users"
+
+if [ $con_cl_M = "NO" ] && [ $con_cl_one_of_sub_users = "NO" ]; then
+	cnted_callsigns="Not "
+	busy_callsigns="Not "
+	do_reboot
+else
+	main_user_busy_check
+	AR_user_busy_check
+	sub_user_busy_check
+fi
+
+#echo "busy_M $busy_M"
+#echo "busy_AR $busy_AR"
+#echo "busy_user $busy_user"
+#exit 0
+
+
+
+if [ "$busy_M" = "NO" ] && [ "$busy_AR" = "NO" ] && [ "$busy_user" = "NO" ]; then
+       	busy_callsigns="Not "
+        do_reboot
+else
+	time_chk
+	min=$((min + 10))
+	file=/etc/crontab
+
+#if [ $busy_M = "yes" ] || [ "$busy_AR" = "yes" ] || [ $busy_user = "yes" ]; then
+
+	if [ $min = 60 ]; then
+                sudo sed -i -e "/man_log/ c 0 $time * * * root /usr/local/dvs/man_log" $file
+        else
+                sudo sed -i -e "/man_log/ c $min $time * * * root /usr/local/dvs/man_log" $file
+	fi
+
+	log_line="$time_now  ${cnted_callsigns}Connected, ${busy_callsigns}Busy, no REBOOT"
+	sudo sed -i "1 i\\$log_line" $FILE_LOG
+fi
+#-----------------------------------------------------------------
+
+#sudo nano $file

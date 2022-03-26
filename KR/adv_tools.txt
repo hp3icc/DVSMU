@@ -1,0 +1,5 @@
+*44,44 다이나믹TG 연결끊기
+*chk_temp,온도 확인
+*ver,DVSwitch 버전?
+*88,88 DVSwitch 재시작(2초)
+*mainmenu,---- MAIN MENU ----

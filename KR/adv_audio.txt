@@ -1,0 +1,3 @@
+*txgain,TX Gain 설정
+*rxgain,RX Gain 설정
+*mainmenu,---- MAIN MENU ----

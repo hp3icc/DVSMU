@@ -1,0 +1,4 @@
+*resetfvrt,.   Are you sure ?
+*resetyes,.           YES
+*tgref,.            NO
+*mainmenu,---- MAIN MENU ----

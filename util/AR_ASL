@@ -1,0 +1,110 @@
+
+ANALOG REFLECTOR 설치 순서
+
+      System upgrade
+            sudo apt update
+            sudo apt upgrade
+            
+      Install Analog Reflector
+            sudo apt install analog-reflector
+            
+      Check if you see <Analog_Reflector  Analog_Reflector.json  arRoot  ssl>
+            cd ssl
+            cd /opt/Analog_Reflector
+            ls -l
+            
+      This is the script that will create a certificate for your server so you can run the HTML Client(hUC)
+            sudo chmod +x mkcerts.sh
+            ./mkcerts.sh        
+      Check if you see <Your certificate is now ready for use>
+
+      Check the version of AR
+            cd /opt/Analog_Reflector
+            ./Analog_Reflector -v
+            
+      Finished installation. Now, Add user account. 사용자 권한  송신가능(1), TG변경가능(2), SYSOP(8), 전체(11)      
+            sudo ./Analog_Reflector user $callsign $dmrid $rptid $pswd $permission
+
+
+ASL 설치
+      cd ~
+      sudo wget http://dvswitch.org/buster
+      sudo chmod +x buster
+      sudo ./buster
+      apt install allstar
+
+ASL 설정
+      node-setup의 password는 홈페이지에서 node를 개설할때 만든 pswd
+
+      설정방법
+      DVSM 사용을 위한 서버의 설정 방법
+
+      1. rpt.conf
+            ; Your Repeater  아래에 54439가 입력되어 있는지 확인
+
+      2. /etc/asterisk/iax.conf 파일을 수정. 아래와 같이 계정 추가
+            register의 내용이 아래와 같은지 확인
+            register =54439:yuni7388@register.allstarlink.org       ; This must be changed to your node number, password
+
+            [general]
+            bindport = 4569          ; DVSM 연결시 Port에 입력할 내용
+
+            아래와 같이 사용자는 계속 추가할 수 있음
+
+            [iax-client]                             ;  DVSM의 Username에 입력
+            type = friend                           ; user, friend 등 상관없음
+            context = iax-client                    ; extensions.conf 의 stanza 항목이름과 같아야 함
+            auth = md5
+            secret = 비밀번호 (DVSM에 설정시 사용)
+
+
+Allmon2 설치 및 설정
+      1. 설치
+            sudo apt install git
+            sudo git clone https://github.com/AllStarLink/AllMon2.git /var/www/html/allmon2
+            cd /var/www/html/allmon2
+            sudo mv allmon.ini.txt allmon.ini.php
+            sudo mv controlpanel.ini.txt controlpanel.ini.php
+
+      2. 기본 설정
+            sudo nano /var/www/html/allmon2/allmon.ini.php
+
+            <?php
+            [Off-site Link]
+            url=https://www.allstarlink.org/
+            [54439]
+            host=127.0.0.1:5038
+            user=admin
+            passwd=llcgi
+            menu=yes
+
+      3. addmin 권한 설정
+            sudo apt install apache2-utils                       ; htpasswd 를 실행하기 위해 설치하는 utility 프로그램
+            sudo htpasswd -cB .htpasswd admin
+
+      4. database download 프로그램 실행 권한 부여
+            sudo chmod 777 /var/www/html/allmon2/astdb.php
+            sudo /var/www/html/allmon2/astdb.php                                ;  실행후 astdb.txt 파일이 생성된 것을 확인할 수 있습니다
+
+
+      5. Lightpd setting
+            sudo nano /etc/lighttpd/lighttpd.conf
+            맨아래에 다음의 내용 추가
+            server.stream-response-body = 2
+            서비스 재시작  sudo systemctl restart lighttpd
+
+      6. 자신의 Allstar Monitor II 에 접속
+            웹브라우즈 주소창에 AllStarLink IP/allmon2/ 를 입력하고 엔터
+            Login  - Username : admin  - Password  : llcgi
+
+
+ASL 사용법
+      iaxRpt 를 사용
+      컴퓨터의 Node는 HL5KY-pc로 되어 있음
+      라즈베리파이의 node로 연결하려면, 54439 로 연경해야 한다. *54439 + Connect
+      54439로부터 연결을 끊으려면, Disconnect를 누르거나, *154439 + Connect
+
+      54439로부터 다른 node로 연결하는 경우.
+      예를들어, JH1BLT로 연결하려면, *352984 + Connect
+      교신이 끝나고 JH1BLT로부터 연결을 끊으려면, *152984 + Connect
+

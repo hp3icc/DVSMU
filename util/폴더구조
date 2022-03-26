@@ -1,0 +1,67 @@
+
+alias dv="cd /usr/local/dvs"
+alias data="cd /var/lib/dvswitch/dvs"
+alias adv="cd /var/lib/dvswitch/dvs/adv"
+alias lan="cd /var/lib/dvswitch/dvs/lan"
+alias tgdb="cd /var/lib/dvswitch/dvs/tgdb"
+alias ab="cd /opt/Analog_Bridge"
+alias ar="cd /opt/Analog_Reflector"
+alias mb="cd /opt/MMDVM_Bridge"
+
+/opt/userXX    추가사용자별 관련 파일
+/var/lib/dvswitch/dvs/tgdb/userXX  추가사용자별 tgdb 파일
+
+/usr/local/dvs  DVS_MENU
+/opt/MMDVM_Bridge
+/opt/Analog_Bridge
+/var/lib/dvswitch/dvs  DATA
+/var/lib/dvswitch/dvs/adv ADV
+/var/lib/dvswitch/dvs/lan LANGUAGE
+
+TGDB
+        /var/lib/dvswitch/dvs/tgdb
+        /var/lib/dvswitch/dvs/tgdb/EN
+        /var/lib/dvswitch/dvs/tgdb/KR
+        /var/lib/dvswitch/dvs/tgdb/user01
+
+LOG files
+        /var/log/dvswitch/Analog_Bridge.log
+        /var/log/dvswitch/dvsmu.log
+        /var/log/mmdvm/MMDVM_Bridge.log
+
+ASL         /usr/local/sbin/asl-menu
+ASL CONFIG files            /etc/asterisk
+
+
+/boot/
+
+/etc/cron.daily
+
+
+====  참고할 명령어 ===============================================================
+
+/var/lib/mmdvm/DMRIds.dat  DMRID
+    DMR ID로 정보 찾을때 : /opt/MMDVM_Bridge/dvswitch.sh lookup 4500052
+    DMRIds.dat update : /usr/local/sbin/DVSM_Update.sh
+
+/lib/systemd/system/lighttpd.service
+/etc/lighttpd/lighttpd.conf (대시보드 포트 80 변경)
+/lib/systemd/system/webproxy.service (RX Monitor 포트 8080 변경)
+
+/var/www/html/include/config.php   Dashboard 포트 설정
+/root/".Remote Control"   ircDDB Remote 설정 내용
+
+/opt/MMDVM_Bridge/dvswitch.sh macro *.txt
+/opt/MMDVM_Bridge/dvswitch.sh message "   "
+
+/opt/MMDVM_Bridge/dvswitch.sh tlvAudio (AUDIO_USE_GAIN 0.25)
+
+/opt/MMDVM_Bridge/dvswitch.sh usrpAudio (AUDIO_USE_GAIN 1.20)
+
+/opt/MMDVM_Bridge/dvswitch tune "passw0rd@tgif.network:62031"
+TGIF = "passw0rd@tgif.network:62031"
+Brandmeister = "passw0rd@3101.repeater.net:62031"
+XRF054 = "passw0rd@xrf054.metro-uhf.org:62030:XLX:4005"
+XLX740 = "passw0rd@xlx740.kc1awv.net:62030:XLX:4005"
+DMR_PLUS = "passw0rd@44.48.48.20:55555:StartRef=4649;RelinkTime=60;UserLink=1"
+

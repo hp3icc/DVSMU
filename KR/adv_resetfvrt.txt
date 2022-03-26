@@ -1,0 +1,5 @@
+*resetfvrt,.  초기화하시겠습니까?
+*resetyes,.               예
+*tgref,.            아니오
+*mainmenu,---- MAIN MENU ----
+

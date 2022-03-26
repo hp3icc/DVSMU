@@ -1,0 +1,5 @@
+*bm,.    Brandmeister
+*dmrplus,.    DMRPlus
+*tgif,.    TGIF
+*other1,.    QRM
+*mainmenu,---- MAIN MENU ----

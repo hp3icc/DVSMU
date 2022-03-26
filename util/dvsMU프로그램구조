@@ -1,0 +1,36 @@
+Function별 내용
+
+
+var_to_ini : var.txt의 내용을 DVSwitch.ini, AB.ini, MB.ini 로 복사하는 작업
+
+file_copy_and_initialize : DVSwitch.ini, AB.ini, MB.ini, dvsm.* 등의 파일을 추가사용자 폴더로 복사하고, 초기작업을 한다.
+
+user_input :  호출부호, ID 등의 입력
+              varxx.txt의 수정
+              function file_copy_and_initialize
+              3가지의 services 파일 복사 (mmdvm_bridge, analog_bridge, md380_emu)
+              function var_to_ini
+
+user_delete : 사용자 삭제
+
+dvswitch_upgrade
+
+dvsmu_upgrade
+
+main_user_log : 주사용자 로그 (MB.lob와 AB.log의 내용을 multitail 로 보여줌)
+
+main_user_config : 주사용자 관리 메뉴
+
+sub_user_log : 추가사용자 로그 (MB.lob와 AB.log의 내용을 multitail 로 보여줌)
+
+sub_user_config : 추가사용자 관리 메뉴
+
+system_optimizer : 최적화
+
+set_reboot : 시스템 리부팅 설정
+
+connection_status : BM 및 클라이언트 연결상태 확인
+
+sys_admin : 시스템 관리
+
+

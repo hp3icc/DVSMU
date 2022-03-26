@@ -1,0 +1,124 @@
+; dvsm.macro
+; This is a macro include file for Analog_Bridge(AB)
+; The purpose of this file is to provide macro commands for use by the
+; DVSwitch Mobile(DVSM) and pyUC clients.
+; These macros execute scripts based on named macros.
+
+
+[MACROS]
+; Example: When a DVSM user selects the DMR mode, AB will look for the mode below and execute the script and pass the parameter.
+; In this case, AB will execute the script "/opt/Analog_Bridge/dvswitch.sh" and pass the prarmeters of "mode DMR" to the script.
+
+
+# Advanced Macro
+var AB_DIR=/var/lib/dvswitch
+var MMDVM_DIR=/var/lib/mmdvm
+var NODE_DIR=/tmp
+var DVS_DIR=/usr/local/dvs
+
+var DVSWITCH=/opt/userUSER_NO/dvswitch.sh
+var DVSM=./dvsm.sh
+var MACRO=${DVSWITCH} macro
+var MESSAGE=${DVSWITCH} message
+
+OnRegister = ${DVSWITCH} menu adv_main.txt
+
+
+# Change MODE
+DMR   = ${DVSM} dmr
+DSTAR = ${DVSM} dstar
+NXDN  = ${DVSM} nxdn
+P25   = ${DVSM} p25
+YSF   = ${DVSM} ysf
+ASL   = ${DVSM} asl
+STFU  = ${DVSM} stfu
+
+# Main contents of Adhoc Macros
+0                = ${MACRO} adv_main.txt
+mainmenu  = ${MACRO} adv_main.txt
+audio     = ${MACRO} adv_audio.txt
+dmr       = ${MACRO} adv_dmr.txt
+sys       = ${MACRO} adv_sys.txt
+txgain    = ${DVSM} tx_gain
+rxgain    = ${DVSM} rx_gain
+hotspot   = ${MACRO} adv_hotspot.txt
+tgref     = ${MACRO} adv_tgref.txt
+tools     = ${MACRO} adv_tools.txt
+push_tg_ref = ${DVSM} push_tg_ref
+resetfvrt = ${MACRO} adv_resetfvrt.txt
+resetyes  = ${DVSM} reset_fvrt_db
+managetg  = ${MACRO} adv_managetg.txt
+ver = ${MESSAGE} "$(${DVSWITCH} version)"
+ver_ab = ${MESSAGE} "AB Version   $(${DVSWITCH} version AB)"
+chk_temp = sudo ${DVS_DIR}/temp.sh
+temp_on = sudo ${DVS_DIR}/temp_msg.sh -y
+temp_off = sudo ${DVS_DIR}/temp_msg.sh -n
+extra_1   = ${MACRO} extra_1.txt
+extra_2   = ${MACRO} extra_2.txt
+extra_3   = ${MACRO} extra_3.txt
+extra_4   = ${MACRO} extra_4.txt
+extra_5   = ${MACRO} extra_5.txt
+44 = ${DVSM} drop_dynamic_tg
+
+
+# Hotspots
+# 11 = ${DVSM} hotspot_1
+# 12 = ${DVSM} hotspot_2
+# 13 = ${DVSM} hotspot_3
+
+
+# Restart DVSwitch services and Reboot the system
+77 = ${DVSM} cpu_doc
+88 = ${DVSM} restart
+99 = ${DVSM} reboot
+00 = sudo shutdown -h now
+
+# update DMR IDs
+update = ${DVSWITCH} update;${DVSWITCH} reloadDatabase
+
+# Ask AB to pull fresh data files and send to DVSM/UC
+dbupdate = ${DVSWITCH} collectProcessPushDataFiles
+
+# Change DMR servers (Brandmeister, TGIF, DMRPlus)
+bm       = ${DVSM} bm
+tgif     = ${DVSM} tgif
+dmrplus  = ${DVSM} dmrplus
+other1 = ${DVSM} other1
+other2 = ${DVSM} other2
+
+# Audio TX Gain Control
+tx_p_0.20 = ${DVSM} tx_p_0.20
+tx_p_0.15 = ${DVSM} tx_p_0.15
+tx_p_0.10 = ${DVSM} tx_p_0.10
+tx_p_0.05 = ${DVSM} tx_p_0.05
+tx_c_0.00 = ${DVSM} tx_c_0.00
+tx_m_0.05 = ${DVSM} tx_m_0.05
+tx_m_0.10 = ${DVSM} tx_m_0.10
+tx_m_0.15 = ${DVSM} tx_m_0.15
+tx_m_0.20 = ${DVSM} tx_m_0.20
+
+# Audio RX Gain Control
+rx_0.00 = ${DVSM} rx_0.00
+rx_1.00 = ${DVSM} rx_1.00
+rx_2.00 = ${DVSM} rx_2.00
+rx_3.00 = ${DVSM} rx_3.00
+rx_4.00 = ${DVSM} rx_4.00
+rx_5.00 = ${DVSM} rx_5.00
+rx_6.00 = ${DVSM} rx_6.00
+rx_7.00 = ${DVSM} rx_7.00
+rx_8.00 = ${DVSM} rx_8.00
+rx_9.00 = ${DVSM} rx_9.00
+rx_10.0 = ${DVSM} rx_10.0
+
+# Add/Delete Favorite TG/Ref
+DD = ${DVSM} del_fvrt
+AA = ${DVSM} add_fvrt 0
+A1 = ${DVSM} add_fvrt 2
+A2 = ${DVSM} add_fvrt 3
+A3 = ${DVSM} add_fvrt 4
+A4 = ${DVSM} add_fvrt 5
+A5 = ${DVSM} add_fvrt 6
+A6 = ${DVSM} add_fvrt 7
+A7 = ${DVSM} add_fvrt 8
+A8 = ${DVSM} add_fvrt 9
+A9 = ${DVSM} add_fvrt 10
