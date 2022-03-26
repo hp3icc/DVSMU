@@ -1,16 +1,36 @@
-config.sh : Un programa que organiza el contenido principal de setup.sh. Actualmente no hay usos especiales.
+# DVSMU 
 
-dvsmu_ver: un archivo que muestra solo la versión de dvsMU (es necesario para aquellos que usan la versión 2.0 o anterior) Si actualiza dvsMU, debe cambiar el contenido de este archivo.
+Este programa es un programa auxiliar que permite configurar servidores de múltiples usuarios juntos en el servidor DVSwitch.
 
-upgrade.sh : si actualiza desde el menú en el programa dvsMU, este archivo se ejecuta.
+Es decir, debe usarse junto con el servidor DVSwitch. 
+#
 
-Carpeta PRINCIPAL: Entre los cambios en el archivo de imagen para distribución doméstica, el contenido es relevante solo para el usuario principal. 
+# Característica:
 
-            예를 들어, 추가모드(STFU, ASL)의 사용을 위해서 dvsm.sh, dvsm.macro, var.txt 등에 내용을 추가해야 한다.
-            이런 파일은 주 사용자에게만 해당되고, 이미지파일에는 수정되지만, 기존 사용자에게는 전달할 방법이 없으므로,
-            dvsmu의 upgrade시 적용이 되도록 한다.
-                        
-            upgrade.sh에 파일을 변경하는 루틴을 추가한다.
-            var.txt은 파일을 변경하는 것이 아니고, 추가되는 변수만, upgrade.sh의 내용중 variable추가하는 루틴에 포함한다.
+    Puede agregar hasta 40 usuarios a un servidor.
+    Puede ver el distintivo de llamada, el ID de DMR y el estado del puerto USRP de todos los usuarios en una pantalla.
+    Dado que se proporciona un método de instalación independiente, se puede utilizar para diversos fines.
+    Cada usuario puede utilizar su propia macro.
+    Cada usuario puede gestionar sus propios favoritos.
+    Los usuarios adicionales solo pueden ser DMR.
+    Puede reflejar la actualización de DVSwitch.
+    Al actualizar, la información de cada usuario se restablece automáticamente.
+    La actualización de dvsMU también es posible desde el menú.
+    Se puede crear un sistema más estable a través de la optimización del sistema.
+#
 
+# Cómo instalar:
 
+    sudo wget https://github.com/hp3icc/dvsmu/raw/main/setup
+    configuración sudo chmod +x
+    sudo ./instalación
+    
+    * al finalizar y ya tener configurado su usuario princiipal de DVSWITCH, escriba dvsmu y presione Entrar para ejecutarlo. 
+
+# Nota 
+
+Utilice DVSMU bajo su propio responsabilidad , toda la informacion compartida es con caracter de experimentacion , cual quier informacion adicional sobre el proyecto DVSMU favor contactar a sus desarrolladores 
+
+# Fuente
+
+https://github.com/hl5ky/dvsmu/blob/main/README.md
