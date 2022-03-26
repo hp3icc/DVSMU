@@ -1,18 +1,18 @@
 #!/bin/bash
 
-# dvsMU내의 메뉴에서 upgrade하면 이 프로그램이 실행됨
-# dvsMU 개발시에, 정식 발표버전과 그 이전 버전의 내용이 달라짐. 이에 따라 정식버전 발표시에 그 이전의 내용과 다른 내용을 수정하는 내용이 있음. (man_log 관련한 내용)
-# 차후에 upgrade 할 내용이 있으면 여기에 계속 주가하면 됨.
-# 차후에 변수가 추가될때를 고려하여 변수가 추가되는 루틴을 미리 작성해 둠.
+# If you upgrade from the menu in dvsMU, this program is executed
+# When developing dvsMU, the contents of the official release version and the previous version are different. Accordingly, when the official version is released, there are contents that are different from the previous contents. (Contents related to man_log)
+# If there is content to be upgraded later, you can keep posting here.
+# Prepare a routine to add variables in advance considering when variables are added later.
 
 user_array="01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40"
 
-#====== crontab 설정 (man_log 및 DMRIds_chk.sh의 실행을 위한 설정) =============================================
+#====== crontab Set (man_log and DMRIds_chk.sh settings for the execution of) =============================================
 function set_crontab() {
 
 FILE_CRON=/etc/crontab
 
-# <<<crontab에서 daily가 있는 줄의 내용 : 25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )>>>
+# <<<crontab at daily content of the line with : 25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )>>>
 
 cron_daily_time=$(sed -n -e '/cron.daily/p' $FILE_CRON | cut -f 2 -d' ')
 cron_daily_time=$(echo $cron_daily_time | cut -f1 -d' ')
@@ -45,10 +45,10 @@ else
 fi
 }
 
-#====== 여러가지 수정사항을 처리하는 루틴 =========================
+#====== Routines to handle various modifications =========================
 function do_change() {
 
-# 주파수가 00000 이면, 430으로 수정
+# frequency 00000 back side, 430 modified to
 update_ini="sudo ${MB}dvswitch.sh updateINIFileValue"
 
 source /var/lib/dvswitch/dvs/var00.txt > /dev/null 2>&1
@@ -60,7 +60,7 @@ if [ $rx_freq = 000000000 ]; then
 	sudo sed -i -e "/^$tag=/ c $tag=$value" $file
 fi
 
-# 아래의 항목들은 지운다.
+# Delete the items below.
 sudo sed -i -e "/^bm_password=/ c bm_password=" $file
 sudo sed -i "/^lat=/ c lat=" $file
 sudo sed -i "/^lon=/ c lon=" $file
@@ -84,7 +84,7 @@ if [ $RXFrequency = "000000000" ]; then
 	$update_ini $file $section $tag $value
 fi
 
-# DMR_fvrt_list.txt 수정
+# DMR_fvrt_list.txt correction
 file=/var/lib/dvswitch/dvs/tgdb/DMR_fvrt_list.txt
 if [[ -z `sudo grep "45039" $file` ]]; then
 	sudo wget -O $file https://raw.githubusercontent.com/hp3icc/DVSMU/main/tgdb_KR/DMR_fvrt_list.txt
