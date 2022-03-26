@@ -25,7 +25,7 @@ Es decir, debe usarse junto con el servidor DVSwitch.
     configuración sudo chmod +x
     sudo ./instalación
     
-    * al finalizar y ya tener configurado su usuario princiipal de DVSWITCH, escriba dvsmu y presione Entrar para ejecutarlo. 
+* al finalizar y ya tener configurado su usuario princiipal de DVSWITCH, escriba dvsmu y presione Entrar para ejecutarlo. 
 
 # Nota 
 
