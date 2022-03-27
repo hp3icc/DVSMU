@@ -37,6 +37,7 @@ Es decir, debe usarse junto con el servidor DVSwitch.
     
 * al finalizar y ya tener configurado su usuario princiipal de DVSWITCH, escriba dvsmu y presione Entrar para ejecutarlo. 
 
+
 # Nota 
 
 Utilice DVSMU bajo su propio responsabilidad , toda la informacion compartida es con caracter de experimentacion , cual quier informacion adicional sobre el proyecto DVSMU favor contactar a sus desarrolladores 
