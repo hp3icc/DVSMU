@@ -656,7 +656,7 @@ ${DVS}dvsmu; exit 0
 ###############################################################
 function dvswitch_upgrade() {
 clear
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 
 if (whiptail --title " DVSwitch upgrade " --yesno "\
 $sp02 (It is recommended to do this after upgrading the main user's DVSwitch in dvs) 
@@ -705,7 +705,7 @@ $sp06 You are using the same version as the main user.
         ${DVS}dvsmu A; exit 0
 fi
 
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 
 if (whiptail --title " DVSwitch upgrade " --yesno "\
 $sp03 Some of the main users' DVSwitch programs have been upgraded. 
@@ -762,7 +762,7 @@ ${DVS}dvsmu A; exit 0
 function dvsmu_upgrade() {
 
 clear
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 TERM=ansi whiptail --title "Checking" --infobox "$T006" 8 60
 
 file=/usr/local/dvs/dvsmu
@@ -1624,7 +1624,7 @@ esac
 ###############################################################
 function connection_status() {
 
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 pse_wait
 
 #---------Extract hotspot callsigns for main and sub users -------------------------------------------
@@ -2139,7 +2139,7 @@ htop; ${DVS}dvsmu A ;;
 system_optimizer ;;
 3)
 clear
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 if (whiptail --title " system reboot " --yesno "\
 
 $sp10 would you like to reboot now?
@@ -2179,7 +2179,7 @@ fi
 clear
 
 if [ ! -e /var/lib/dvswitch/dvs/lan/language.txt ]; then
-sudo \cp -f /var/lib/dvswitch/dvs/lan/korean.txt /var/lib/dvswitch/dvs/lan/language.txt
+sudo \cp -f /var/lib/dvswitch/dvs/lan/english.txt /var/lib/dvswitch/dvs/lan/language.txt
 fi
 
 source /usr/local/dvs/dvsmuz > /dev/null 2>&1
