@@ -56,7 +56,7 @@ other1_address=freedmr-hp.ddns.net
 other1_password=passw0rd
 other1_port=62031
 
-other2_name=DMR Central
+other2_name=DMR_Central
 other2_address=dmr.pa7lim.nl
 other2_password=passw0rd
 other2_port=55555
