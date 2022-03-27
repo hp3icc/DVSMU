@@ -1,5 +1,6 @@
 *bm,.    Brandmeister
 *dmrplus,.    DMRPlus
 *tgif,.    TGIF
-*other1,.    QRM
+*other1,.    FreeDMR
+*other2,.    DMR Central
 *mainmenu,---- MAIN MENU ----
