@@ -9,7 +9,7 @@ echo "----------------  Please Wait  ---------------------"
 if [ ! -d /var/lib/dvswitch/dvs ] || [ ! -d /usr/local/dvs ]; then
 echo
 echo
-echo "--------  DVSwitch가 설치되지 않았습니다  ----------"
+echo "--------  DVSwitch not installed  ----------"
 echo
 echo
 exit 0
@@ -92,9 +92,9 @@ if [[ "$path" =~ "dvs" ]]; then
 else
         echo "------------------  FINISHED  ----------------------"
         echo
-        echo "--------- 재부팅후 < dvsmu > 실행 가능 -------------"
+        echo "--------- After rebooting, <dvsmu> can be run -------------"
         echo
-        echo "---------- 재부팅 하시겠습니까? (y/n) --------------"
+        echo "---------- do you want to reboot? (y/n) --------------"
         read reply
         if [ "$reply" = Y ] || [ "$reply" = y ] || [ "$reply" = "" ]; then
         clear
@@ -102,9 +102,9 @@ else
         echo
         echo
         echo
-        echo "------------- SSH 연결이 끊어집니다. ---------------"
+        echo "------------- The SSH connection is lost. ---------------"
         echo
-        echo "------------- 잠시후 다시 연결하십시오. -------------"
+        echo "------------- Please reconnect after a while. -------------"
         echo
         echo
                 sudo rm setup > /dev/null 2>&1
