@@ -2437,7 +2437,7 @@ esac
 clear
 
 if [ ! -e /var/lib/dvswitch/dvs/lan/language.txt ]; then
-sudo \cp -f /var/lib/dvswitch/dvs/lan/korean.txt /var/lib/dvswitch/dvs/lan/language.txt
+sudo \cp -f /var/lib/dvswitch/dvs/lan/english.txt /var/lib/dvswitch/dvs/lan/language.txt
 fi
 
 opt=$1; opt2=$2
