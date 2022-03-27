@@ -16,7 +16,7 @@ MESSAGE="${DVSWITCH} message"
 TUNE="${DVSWITCH} tune"
 MODESET="${DVSWITCH} mode"
 
-source /var/lib/dvswitch/dvs/lan/korean.txt
+source /var/lib/dvswitch/dvs/lan/english.txt
 
 #VARIABLES
 startup_lan=1
@@ -51,15 +51,15 @@ tgif_address=tgif.network
 tgif_password=passw0rd
 tgif_port=62031
 
-other1_name=QRM
-other1_address=qrm.kc3ol.net
+other1_name=FreeDMR
+other1_address=freedmr-hp.ddns.net
 other1_password=passw0rd
 other1_port=62031
 
-other2_name=
-other2_address=
-other2_password=
-other2_port=
+other2_name=DMR Central
+other2_address=dmr.pa7lim.nl
+other2_password=passw0rd
+other2_port=55555
 
 # AMBE
 ambe_server=192.168.0.100
