@@ -33,7 +33,7 @@ module=S
 nxdn_id=
 usrp_port=
 
-default_dmr_server=FreeDMR
+default_dmr_server=Brandmeister
 
 bm_name=Brandmeister
 bm_master=
