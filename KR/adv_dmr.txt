@@ -2,5 +2,5 @@
 *dmrplus,.    DMRPlus
 *tgif,.    TGIF
 *other1,.    FreeDMR
-*other2,.    DMR Central
+*other2,.    DMR_Central
 *mainmenu,---- MAIN MENU ----
