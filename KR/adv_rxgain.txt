@@ -1,0 +1,7 @@
+*rx_0.00,=== RXGain   <4.00>
+*rx_1.00,.          Set to 1.00
+*rx_2.00,.          Set to 2.00
+*rx_3.00,.          Set to 3.00
+*rx_4.00,.          Set to 4.00
+*rx_5.00,.          Set to 5.00
+*mainmenu,---- MAIN MENU ----

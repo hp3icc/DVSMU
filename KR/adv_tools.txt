@@ -1,0 +1,5 @@
+*44,44 Drop Dynamic TGs
+*temp,Check Temp.
+*ver,DVSwitch Version?
+*88,88 Restart DVSwitch Services(2sec)
+*mainmenu,---- MAIN MENU ----
