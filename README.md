@@ -1,8 +1,7 @@
 # DVSMU 
 
-Este programa es un programa auxiliar que permite configurar servidores de múltiples usuarios juntos en el servidor DVSwitch.
+DVSMU es un menu que permite agregar usuarios adicionales a nuestro server DVSWITCH, convirtiendolo en multiusuario.
 
-Es decir, debe usarse junto con el servidor DVSwitch. 
 #
 ![alt text](https://raw.githubusercontent.com/hp3icc/DVSMU/main/E8D1FC07-6509-4170-B0E9-92488983AE89.jpeg)
 
