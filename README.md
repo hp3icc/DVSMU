@@ -4,6 +4,7 @@ Este programa es un programa auxiliar que permite configurar servidores de múlt
 
 Es decir, debe usarse junto con el servidor DVSwitch. 
 #
+![alt text](https://raw.githubusercontent.com/hp3icc/DVSMU/main/E8D1FC07-6509-4170-B0E9-92488983AE89.jpeg)
 
 # Característica:
 
