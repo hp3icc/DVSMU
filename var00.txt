@@ -55,7 +55,7 @@ other1_name=FreeDMR
 other1_address=freedmr-hp.ddns.net
 other1_password=passw0rd
 other1_port=62031
-options1=TS2=7144;DIAL=0;VOICE=0;TIMER=10;
+other1_options=TS2=7144;DIAL=0;VOICE=0;TIMER=10;
 
 other2_name=DMR_Central
 other2_address=dmr.pa7lim.nl
