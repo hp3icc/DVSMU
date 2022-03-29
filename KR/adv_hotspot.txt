@@ -1,7 +1,0 @@
-*111,.    HotSpot 1
-*222,.    HotSpot 2
-*333,.    HotSpot 3
-*mainmenu,---- MAIN MENU ----
-
-
-

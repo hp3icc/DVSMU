@@ -1,3 +1,0 @@
-*txgain,TX Gain Setup
-*rxgain,RX Gain Setup
-*mainmenu,---- MAIN MENU ----

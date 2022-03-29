@@ -1,3 +1,0 @@
-*push_tg_ref,Download(DBupdate+Favorite)
-*managetg,Add/Del TG/Ref
-*mainmenu,---- MAIN MENU ----
