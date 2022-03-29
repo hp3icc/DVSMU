@@ -1,0 +1,4 @@
+*audio,AUDIO GAIN 설정
+*dmr,DMR 서버 선택
+*tgref,TG/Ref 관리
+*tools,도구
