@@ -455,7 +455,7 @@ sel=$(whiptail --title " Set DVSM macro language " --menu "\
 \n
 " 11 50 2 \
 "1" "한글" \
-"2" "영어" \
+"2" "English" \
 3>&1 1>&2 2>&3)
 
 if [ $? != 0 ]; then ${DVS}dvsmu $USER_NO; exit 0; fi
