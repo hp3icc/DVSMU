@@ -35,9 +35,9 @@ usrp_port=
 
 default_dmr_server=FreeDMR
 
-bm_name=FreeDMR
+bm_name=Brandmeister
 bm_master=
-bm_address=freedmr-hp.ddns.net
+bm_address=3021.master.brandmeister.network
 bm_password=passw0rd
 bm_port=62031
 
@@ -51,10 +51,16 @@ tgif_address=tgif.network
 tgif_password=passw0rd
 tgif_port=62031
 
-other1_name=DMR_Central
-other1_address=dmr.pa7lim.nl
+other1_name=FreeDMR
+other1_address=freedmr-hp.ddns.net
 other1_password=passw0rd
-other1_port=55555
+other1_port=62031
+options1=TS2=7144;DIAL=0;VOICE=0;TIMER=10;
+
+other2_name=DMR_Central
+other2_address=dmr.pa7lim.nl
+other2_password=passw0rd
+other2_port=55555
 
 # AMBE
 ambe_server=192.168.0.100
@@ -77,13 +83,13 @@ txgain_dmr_default=0.35
 usrpGain_default=1.10
 
 # MMDVM_Bridge Info
-rx_freq=430000000
-tx_freq=430000000
+rx_freq=433500000
+tx_freq=433500000
 pwr=0
-lat=
-lon=
+lat=0.0
+lon=0.0
 hgt=0
-lctn=
+lctn=DVSMU
 desc=dvsMU
 url=
 
