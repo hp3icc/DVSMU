@@ -1315,7 +1315,7 @@ $sp02 User$USER_NO  $call_sign $dmr_id $ext $usrp_port $macro_status
 "4" "delete user" \
 "5" "service restart" \
 "6" "Change to default macro" \
-"7" "Change to edit macro" \
+"7" "Change to advanced macro" \
 "8" "talkerAlias ($TA)" \
 "9" "Back to MAIN" \
 3>&1 1>&2 2>&3)
@@ -1360,7 +1360,7 @@ sel=$(whiptail --title " Change settings " --menu "\
 " 11 30 3 \
 "C" "cancel" \
 "A" "activate" \
-"I" "activate" \
+"I" "inactive" \
 3>&1 1>&2 2>&3)
 
 case $sel in
@@ -1898,7 +1898,7 @@ if [ $ar_status = "active" ]; then
 	chk_AB_log
 fi
 
-#-------------- sub_user의 클라이언트 연결시간 및 연결상태 확인 --------------------
+#-------------- sub_user Check the client connection time and connection status --------------------
 user=$user_array
 
 for user in $user; do
@@ -2298,7 +2298,7 @@ if [ $? != 0 ]; then exit 0; fi
 else
 
 sel=$(whiptail --title " DVSwitch Multi User " --menu "\
-            dvsMU v.$SCRIPT_VERSION by HL5KY
+            dvsMU v.$SCRIPT_VERSION by HL5KY 
 \n
 " 31 50 23 \
 "A" "system management" \
