@@ -32,9 +32,9 @@ nano /lib/systemd/system/http.server-dvs.service && sudo systemctl daemon-reload
 sudo systemctl restart http.server-dvs.service && sudo systemctl enable http.server-dvs.service ;;
 6)
 sudo systemctl stop http.server-dvs.service && sudo systemctl disable http.server-dvs.service ;;
-6)
-dvsmu ;;
 7)
+dvsmu ;;
+8)
 break;
 esac
 done
