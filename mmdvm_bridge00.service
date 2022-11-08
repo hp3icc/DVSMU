@@ -1,22 +1,19 @@
 [Unit]
-Description=MMDVM_Bridge Service
+Description=MMDVM_Bridge Service userUSER_NO
 # Description=Place this file in /lib/systemd/system
 # Description=N4IRS 10/16/2020
 
-After=netcheck.service
-Requires=netcheck.service
 
 [Service]
+User=root
 Type=simple
 Restart=always
 RestartSec=3
-Restart=on-abort
 StandardOutput=null
 WorkingDirectory=/opt/userUSER_NO
-ExecStartPre = /bin/sh -c 'echo "Starting MMDVM_Bridge: [`date +%%T.%%3N`]" >> /var/log/netcheck'
+ExecStartPre=/bin/sh -c 'until ping -c1 noip.com; do sleep 1; done;'
 ExecStart=/opt/userUSER_NO/MMDVM_Bridge /opt/userUSER_NO/MMDVM_Bridge.ini
-ExecReload=/bin/kill -HUP $MAINPID
-KillMode=process
+
 
 [Install]
 WantedBy=multi-user.target
