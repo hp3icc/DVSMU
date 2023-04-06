@@ -129,7 +129,7 @@ file=/opt/user$USER_NO/MMDVM_Bridge.ini
 	$update_ini $file "DMR Network" Address ${bm_address}
 	$update_ini $file "DMR Network" Password ${bm_password}
 	$update_ini $file "DMR Network" Port ${bm_port}
-#	$update_ini $file Log FileRoot MMDVM_Bridge$USER_NO
+	$update_ini $file Log FileRoot MMDVM_Bridge$USER_NO
 	sudo sed -i "s/Enable=1/Enable=0/g" $file
 
 let "complete=complete+10"
